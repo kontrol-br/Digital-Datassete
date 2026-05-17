@@ -1,0 +1,12 @@
+# PlatformIO build and dependency cache
+.pio/
+
+# PlatformIO local IDE/project metadata
+.vscode/
+
+# Common host-build artifacts
+*.o
+*.elf
+*.bin
+*.uf2
+*.map
