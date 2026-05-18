@@ -22,6 +22,15 @@ constexpr uint8_t BTN_SELECT = 6;
 constexpr uint8_t BTN_BACK = 7;
 constexpr uint8_t BTN_PLAY_STOP = 4; // Optional, currently unused.
 
+// Rotary encoder/menu aliases using the existing button inputs.
+constexpr uint8_t ENCODER_LEFT = BTN_UP;
+constexpr uint8_t ENCODER_RIGHT = BTN_DOWN;
+constexpr uint8_t ENCODER_PUSH = BTN_SELECT;
+
+// Optional SSD1306 I2C display wiring suggestion.
+constexpr uint8_t OLED_SDA = 20;
+constexpr uint8_t OLED_SCL = 21;
+
 // Audio and capture pins.
 constexpr uint8_t AUDIO_OUT_PIN = 15;
 constexpr uint8_t DIGITAL_IN_PIN = 14;
