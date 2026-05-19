@@ -14,5 +14,5 @@ public:
     void showMonitoring(const InputLevel& level);
     void drawBrowser(const char* path, const char* const* entries, const bool* dirs, uint8_t count, uint8_t selected);
 private:
-    uint8_t rotation_ = 1;
+    uint8_t rotation_ = 3;
 };
