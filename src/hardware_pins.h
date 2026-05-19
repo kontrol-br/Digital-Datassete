@@ -3,10 +3,10 @@
 
 namespace Pins {
 // SD SPI (SPI0 by default; easy to move to shared/separate SPI wiring).
-constexpr uint8_t SD_CS = 17;
-constexpr uint8_t SD_SCK = 18;
-constexpr uint8_t SD_MOSI = 19;
-constexpr uint8_t SD_MISO = 16;
+constexpr uint8_t SD_CS = 21;
+constexpr uint8_t SD_SCK = 25;
+constexpr uint8_t SD_MOSI = 26;
+constexpr uint8_t SD_MISO = 22;
 
 // ST7735 display SPI (SPI1-style pinout by default).
 constexpr uint8_t LCD_CS = 9;
@@ -34,6 +34,6 @@ constexpr uint8_t OLED_SCL = 21;
 // Audio and capture pins.
 constexpr uint8_t AUDIO_OUT_PIN = 15;
 constexpr uint8_t DIGITAL_IN_PIN = 14;
-constexpr uint8_t ADC_IN_PIN = 26; // GP26 / ADC0
+constexpr uint8_t ADC_IN_PIN = 27; // GP27 / ADC1
 constexpr uint8_t BUZZER_PIN = 13;
 } // namespace Pins
