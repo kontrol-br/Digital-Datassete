@@ -32,11 +32,17 @@ Os pinos ficam centralizados em `src/hardware_pins.h` para facilitar alteração
 | Display SSD1306 I2C (opcional) | SCL | GP21 / `Pins::OLED_SCL` | 27 | Barramento I2C sugerido sem conflito com o SPI do SD/display. |
 | Display SSD1306 I2C (opcional) | VCC | 3V3 | 36 | Use 3,3 V para manter os pull-ups I2C em nível seguro ao RP2040. |
 | Display SSD1306 I2C (opcional) | GND | GND | 3, 8, 13, 18, 23, 28, 33 ou 38 | Terra comum. |
-| Encoder/potenciômetro de menu | Esquerda / A / CLK | GP2 / `Pins::ENCODER_LEFT` | 4 | Entrada com pull-up interno; acionar para GND. Também corresponde ao botão UP atual. |
-| Encoder/potenciômetro de menu | Direita / B / DT | GP3 / `Pins::ENCODER_RIGHT` | 5 | Entrada com pull-up interno; acionar para GND. Também corresponde ao botão DOWN atual. |
-| Encoder/potenciômetro de menu | Push / SW | GP6 / `Pins::ENCODER_PUSH` | 9 | Entrada com pull-up interno; acionar para GND. Também corresponde ao botão SELECT atual. |
+| Encoder rotativo 5 pinos | CLK (A) | GP0 / `Pins::ENCODER_LEFT` | 1 | Canal A do encoder (alterado para evitar conflitos com o SD). |
+| Encoder rotativo 5 pinos | DT (B) | GP1 / `Pins::ENCODER_RIGHT` | 2 | Canal B do encoder (alterado para evitar conflitos com o SD). |
+| Encoder rotativo 5 pinos | SW (botão) | GP5 / `Pins::ENCODER_PUSH` | 7 | Botão do eixo (push), também fora dos pinos reservados ao SD. |
+| Encoder rotativo 5 pinos | + (VCC) | 3V3 | 36 | Alimentação do módulo do encoder (recomendado 3,3 V). |
+| Encoder rotativo 5 pinos | GND | GND | 3, 8, 13, 18, 23, 28, 33 ou 38 | Terra comum com o Pico. |
 
-> Observação: o firmware atual lê `GP2`, `GP3` e `GP6` como botões digitais ativos em nível baixo. Um encoder rotativo em quadratura pode ser ligado nesses sinais, mas a decodificação específica de quadratura ainda deve ser implementada se você quiser giro contínuo em vez de eventos simples esquerda/direita.
+> Encoder de 5 pinos (`CLK`, `DT`, `SW`, `+`, `GND`): para usar o módulo corretamente, conecte os **5 pinos**.  
+> - Sinais para o firmware: `CLK -> GP0`, `DT -> GP1`, `SW -> GP5`.  
+> - Alimentação do módulo: `+ -> 3V3` e `GND -> GND`.  
+>  
+> O firmware atual lê `GP0`, `GP1` e `GP5` como entradas digitais ativas em nível baixo (equivalentes a UP/DOWN/SELECT). A leitura completa de quadratura do encoder pode ser refinada em futuras versões para navegação mais fluida.
 
 ## Compilação
 

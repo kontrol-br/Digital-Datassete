@@ -16,9 +16,9 @@ constexpr uint8_t LCD_SCK = 10;
 constexpr uint8_t LCD_MOSI = 11;
 
 // Buttons, wired active-low with internal pull-ups.
-constexpr uint8_t BTN_UP = 2;
-constexpr uint8_t BTN_DOWN = 3;
-constexpr uint8_t BTN_SELECT = 6;
+constexpr uint8_t BTN_UP = 0;
+constexpr uint8_t BTN_DOWN = 1;
+constexpr uint8_t BTN_SELECT = 5;
 constexpr uint8_t BTN_BACK = 7;
 constexpr uint8_t BTN_PLAY_STOP = 4; // Optional, currently unused.
 
