@@ -61,15 +61,8 @@ void DisplayManager::splash() {
 }
 
 void DisplayManager::colorTest() {
-    const uint16_t colors[] = {C_BLACK, C_RED, C_GREEN, C_BLUE, C_WHITE};
-    for (uint8_t i = 0; i < 5; ++i) { tft.fillScreen(colors[i]); delay(120); }
-    tft.fillScreen(C_BLACK);
-    tft.drawRect(sx(0), sy(0), Config::LCD_HEIGHT - UI_OFFSET_X, Config::LCD_WIDTH - UI_OFFSET_Y, C_WHITE);
-    tft.fillRect(sx(4), sy(12), 30, 12, C_RED);
-    tft.fillRect(sx(38), sy(12), 30, 12, C_GREEN);
-    tft.fillRect(sx(72), sy(12), 30, 12, C_BLUE);
-    tft.setCursor(sx(6), sy(34)); tft.setTextColor(C_WHITE); tft.println("Orientation OK?");
-    delay(350);
+    // Orientation screen intentionally disabled.
+    // Keep method as a no-op to preserve interface compatibility.
 }
 
 void DisplayManager::showSelfTest(bool displayOk, bool adcOk, bool sdOk, bool buzzerOn) {

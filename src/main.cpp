@@ -30,7 +30,7 @@ static void runSelfTest() {
     const bool displayOk = display.begin();
     display.splash();
     delay(450);
-    display.colorTest();
+    // Orientation/color test removed to avoid boot-stop reports on this screen.
 
     inputMonitor.begin();
     const bool adcOk = true;
