@@ -9,9 +9,9 @@ MenuSystem::MenuSystem(DisplayManager& display, SdManager& sd, BuzzerManager& bu
     : display_(display), sd_(sd), buzzer_(buzzer), monitor_(monitor), codecs_(codecs), codecCount_(codecCount) {}
 
 void MenuSystem::begin() {
-    pinMode(Pins::BTN_UP, INPUT_PULLUP);
-    pinMode(Pins::BTN_DOWN, INPUT_PULLUP);
-    pinMode(Pins::BTN_SELECT, INPUT_PULLUP);
+    pinMode(Pins::ENCODER_LEFT, INPUT_PULLUP);
+    pinMode(Pins::ENCODER_RIGHT, INPUT_PULLUP);
+    pinMode(Pins::ENCODER_PUSH, INPUT_PULLUP);
     pinMode(Pins::BTN_BACK, INPUT_PULLUP);
     render();
 }
@@ -40,9 +40,9 @@ void MenuSystem::update() {
 MenuSystem::Button MenuSystem::readButton() {
     if (millis() - lastButtonMs_ < Config::MENU_DEBOUNCE_MS) return Button::None;
     Button pressed = Button::None;
-    if (digitalRead(Pins::BTN_UP) == LOW) pressed = Button::Up;
-    else if (digitalRead(Pins::BTN_DOWN) == LOW) pressed = Button::Down;
-    else if (digitalRead(Pins::BTN_SELECT) == LOW) pressed = Button::Select;
+    if (digitalRead(Pins::ENCODER_LEFT) == LOW) pressed = Button::Up;
+    else if (digitalRead(Pins::ENCODER_RIGHT) == LOW) pressed = Button::Down;
+    else if (digitalRead(Pins::ENCODER_PUSH) == LOW) pressed = Button::Select;
     else if (digitalRead(Pins::BTN_BACK) == LOW) pressed = Button::Back;
     if (pressed != Button::None) lastButtonMs_ = millis();
     return pressed;

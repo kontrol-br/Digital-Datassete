@@ -19,13 +19,13 @@ constexpr uint8_t LCD_MOSI = 11;
 constexpr uint8_t BTN_UP = 0;
 constexpr uint8_t BTN_DOWN = 1;
 constexpr uint8_t BTN_SELECT = 5;
-constexpr uint8_t BTN_BACK = 7;
+constexpr uint8_t BTN_BACK = 0;
 constexpr uint8_t BTN_PLAY_STOP = 4; // Optional, currently unused.
 
 // Rotary encoder/menu aliases using the existing button inputs.
-constexpr uint8_t ENCODER_LEFT = BTN_UP;
-constexpr uint8_t ENCODER_RIGHT = BTN_DOWN;
-constexpr uint8_t ENCODER_PUSH = BTN_SELECT;
+constexpr uint8_t ENCODER_LEFT = 1;
+constexpr uint8_t ENCODER_RIGHT = 2;
+constexpr uint8_t ENCODER_PUSH = 7;
 
 // Optional SSD1306 I2C display wiring suggestion.
 constexpr uint8_t OLED_SDA = 20;

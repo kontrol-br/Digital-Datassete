@@ -21,6 +21,16 @@ static DummyTft tft;
 #define INITR_MINI160x80 0
 #endif
 
+namespace {
+void drawBoldText(int16_t x, int16_t y, const char* text, uint16_t color) {
+    tft.setTextColor(color);
+    tft.setCursor(x, y);
+    tft.print(text);
+    tft.setCursor(x + 1, y);
+    tft.print(text);
+}
+}
+
 bool DisplayManager::begin() {
     tft.initR(INITR_MINI160x80);
     setRotation(rotation_);
@@ -67,12 +77,13 @@ void DisplayManager::showSelfTest(bool displayOk, bool adcOk, bool sdOk, bool bu
 
 void DisplayManager::showMenu(const char* title, const char* const* items, uint8_t count, uint8_t selected, const char* footer) {
     tft.fillScreen(C_BLACK);
-    tft.setTextColor(C_YELLOW); tft.setCursor(0, 0); tft.println(title);
+    drawBoldText(0, 0, title, C_YELLOW);
     tft.drawFastHLine(0, 10, Config::LCD_HEIGHT, C_BLUE);
     tft.setTextColor(C_WHITE);
     for (uint8_t i = 0; i < count && i < 5; ++i) {
         tft.setCursor(0, 15 + i * 11);
-        tft.print(i == selected ? "> " : "  ");
+        if (i == selected) { tft.setTextColor(C_YELLOW); tft.print("o "); tft.setTextColor(C_WHITE); }
+        else tft.print("  ");
         tft.println(items[i]);
     }
     if (footer) { tft.setCursor(0, 70); tft.setTextColor(C_BLUE); tft.println(footer); }
@@ -80,7 +91,7 @@ void DisplayManager::showMenu(const char* title, const char* const* items, uint8
 
 void DisplayManager::showMessage(const char* title, const char* line1, const char* line2, const char* footer) {
     tft.fillScreen(C_BLACK);
-    tft.setTextColor(C_YELLOW); tft.setCursor(0, 0); tft.println(title);
+    drawBoldText(0, 0, title, C_YELLOW);
     tft.setTextColor(C_WHITE); tft.setCursor(0, 18); if (line1) tft.println(line1);
     tft.setCursor(0, 32); if (line2) tft.println(line2);
     if (footer) { tft.setCursor(0, 68); tft.setTextColor(C_BLUE); tft.println(footer); }
@@ -105,12 +116,13 @@ void DisplayManager::showMonitoring(const InputLevel& level) {
 
 void DisplayManager::drawBrowser(const char* path, const char* const* entries, const bool* dirs, uint8_t count, uint8_t selected) {
     tft.fillScreen(C_BLACK);
-    tft.setTextColor(C_YELLOW); tft.setCursor(0, 0); tft.println("SD Browser");
+    drawBoldText(0, 0, "SD Browser", C_YELLOW);
     tft.setTextColor(C_BLUE); tft.setCursor(0, 11); tft.println(path);
     tft.setTextColor(C_WHITE);
     for (uint8_t i = 0; i < count && i < 4; ++i) {
         tft.setCursor(0, 24 + i * 11);
-        tft.print(i == selected ? "> " : "  ");
+        if (i == selected) { tft.setTextColor(C_YELLOW); tft.print("o "); tft.setTextColor(C_WHITE); }
+        else tft.print("  ");
         if (dirs[i]) tft.print("[");
         tft.print(entries[i]);
         if (dirs[i]) tft.print("]");
