@@ -41,6 +41,15 @@ MenuSystem::Button MenuSystem::readButton() {
     static uint8_t lastClkState = HIGH;
     if (millis() - lastButtonMs_ < Config::MENU_DEBOUNCE_MS) return Button::None;
 
+    if (digitalRead(Pins::BTN_UP) == LOW) {
+        lastButtonMs_ = millis();
+        return Button::Up;
+    }
+    if (digitalRead(Pins::BTN_DOWN) == LOW) {
+        lastButtonMs_ = millis();
+        return Button::Down;
+    }
+
     if (digitalRead(Pins::ENCODER_PUSH) == LOW || digitalRead(Pins::BTN_SELECT) == LOW) {
         lastButtonMs_ = millis();
         return Button::Select;
