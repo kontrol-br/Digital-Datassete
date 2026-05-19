@@ -8,7 +8,7 @@ Firmware C++ modular para Raspberry Pi Pico/RP2040 com Arduino-Pico. A primeira 
 - Criação/verificação das pastas `/ZX_SPECTRUM`, `/ZX81` e `/MSX` no SD.
 - Menu principal com seleção de plataforma, Tools e Settings.
 - Submenus por plataforma com stubs de playback/gravação.
-- Monitor de entrada analógica em GP26/ADC0 com média, Vpp, barra e status LOW/GOOD/HIGH/CLIP.
+- Monitor de entrada analógica em GP27/ADC1 com média, Vpp, barra e status LOW/GOOD/HIGH/CLIP.
 - Navegador de SD com entrada em pastas, retorno para pasta anterior e exclusão de arquivos com confirmação.
 - Buzzer configurável no menu Settings e persistência simples em `/CONFIG.INI` quando o SD está disponível.
 
@@ -19,7 +19,7 @@ Os pinos ficam centralizados em `src/hardware_pins.h` para facilitar alteração
 | Função | Sinal do módulo | GPIO / nome no firmware | Pino físico Pico | Observações |
 | --- | --- | --- | --- | --- |
 | Entrada digital condicionada | Saída do 74HC14 | GP14 / `Pins::DIGITAL_IN_PIN` | 19 | Entrada para captura de pulsos já em nível lógico 3,3 V. Não aplicar 5 V direto no GPIO. |
-| Leitura analógica | Sinal analógico de áudio/nível | GP26 / ADC0 / `Pins::ADC_IN_PIN` | 31 | Faixa máxima do ADC do RP2040 é 0 a 3,3 V; use divisor/condicionamento se a fonte puder exceder 3,3 V. |
+| Leitura analógica | Sinal analógico de áudio/nível | GP27 / ADC1 / `Pins::ADC_IN_PIN` | 32 | Faixa máxima do ADC do RP2040 é 0 a 3,3 V; use divisor/condicionamento se a fonte puder exceder 3,3 V. |
 | Alimentação +5 V | VBUS | VBUS | 40 | Saída/entrada de 5 V do USB. Use GND comum com todos os módulos. |
 | Display ST7735S SPI | CS | GP9 / `Pins::LCD_CS` | 12 | Display SPI colorido padrão do firmware. |
 | Display ST7735S SPI | DC/A0 | GP8 / `Pins::LCD_DC` | 11 | Linha de comando/dados. |
