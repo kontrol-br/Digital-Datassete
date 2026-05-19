@@ -83,17 +83,52 @@ void DisplayManager::showSelfTest(bool displayOk, bool adcOk, bool sdOk, bool bu
 }
 
 void DisplayManager::showMenu(const char* title, const char* const* items, uint8_t count, uint8_t selected, const char* footer) {
-    tft.fillScreen(C_BLACK);
-    drawBoldText(0, 0, title, C_YELLOW);
-    tft.drawFastHLine(sx(0), sy(10), Config::LCD_HEIGHT - UI_OFFSET_X, C_BLUE);
-    tft.setTextColor(C_WHITE);
-    for (uint8_t i = 0; i < count && i < 5; ++i) {
-        tft.setCursor(sx(0), sy(15 + i * 11));
-        if (i == selected) { tft.setTextColor(C_YELLOW); tft.print("o "); tft.setTextColor(C_WHITE); }
-        else tft.print("  ");
-        tft.println(items[i]);
+    static const char* lastTitle = nullptr;
+    static const char* const* lastItems = nullptr;
+    static uint8_t lastCount = 0;
+    static const char* lastFooter = nullptr;
+    static int16_t lastSelected = -1;
+
+    const bool fullRedraw = (lastTitle != title) || (lastItems != items) || (lastCount != count) || (lastFooter != footer) ||
+                            (selected >= count) || (lastSelected < 0) || (lastSelected >= count);
+
+    if (fullRedraw) {
+        tft.fillScreen(C_BLACK);
+        drawBoldText(0, 0, title, C_YELLOW);
+        tft.drawFastHLine(sx(0), sy(10), Config::LCD_HEIGHT - UI_OFFSET_X, C_BLUE);
+        tft.setTextColor(C_WHITE);
+        for (uint8_t i = 0; i < count && i < 5; ++i) {
+            tft.setCursor(sx(0), sy(15 + i * 11));
+            if (i == selected) { tft.setTextColor(C_YELLOW); tft.print("o "); tft.setTextColor(C_WHITE); }
+            else tft.print("  ");
+            tft.println(items[i]);
+        }
+        if (footer) { tft.setCursor(sx(0), sy(70)); tft.setTextColor(C_BLUE); tft.println(footer); }
+    } else if (lastSelected != selected) {
+        const uint8_t oldSel = static_cast<uint8_t>(lastSelected);
+        const uint8_t maxVisible = count > 5 ? 5 : count;
+        if (oldSel < maxVisible) {
+            tft.fillRect(sx(0), sy(15 + oldSel * 11), Config::LCD_HEIGHT - UI_OFFSET_X, 9, C_BLACK);
+            tft.setCursor(sx(0), sy(15 + oldSel * 11));
+            tft.setTextColor(C_WHITE);
+            tft.print("  ");
+            tft.println(items[oldSel]);
+        }
+        if (selected < maxVisible) {
+            tft.fillRect(sx(0), sy(15 + selected * 11), Config::LCD_HEIGHT - UI_OFFSET_X, 9, C_BLACK);
+            tft.setCursor(sx(0), sy(15 + selected * 11));
+            tft.setTextColor(C_YELLOW);
+            tft.print("o ");
+            tft.setTextColor(C_WHITE);
+            tft.println(items[selected]);
+        }
     }
-    if (footer) { tft.setCursor(sx(0), sy(70)); tft.setTextColor(C_BLUE); tft.println(footer); }
+
+    lastTitle = title;
+    lastItems = items;
+    lastCount = count;
+    lastFooter = footer;
+    lastSelected = selected;
 }
 
 void DisplayManager::showMessage(const char* title, const char* line1, const char* line2, const char* footer) {
