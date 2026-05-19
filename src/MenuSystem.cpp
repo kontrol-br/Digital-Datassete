@@ -38,14 +38,28 @@ void MenuSystem::update() {
 }
 
 MenuSystem::Button MenuSystem::readButton() {
+    static uint8_t lastClkState = HIGH;
     if (millis() - lastButtonMs_ < Config::MENU_DEBOUNCE_MS) return Button::None;
-    Button pressed = Button::None;
-    if (digitalRead(Pins::ENCODER_LEFT) == LOW) pressed = Button::Up;
-    else if (digitalRead(Pins::ENCODER_RIGHT) == LOW) pressed = Button::Down;
-    else if (digitalRead(Pins::ENCODER_PUSH) == LOW) pressed = Button::Select;
-    else if (digitalRead(Pins::BTN_BACK) == LOW) pressed = Button::Back;
-    if (pressed != Button::None) lastButtonMs_ = millis();
-    return pressed;
+
+    if (digitalRead(Pins::ENCODER_PUSH) == LOW) {
+        lastButtonMs_ = millis();
+        return Button::Select;
+    }
+    if (digitalRead(Pins::BTN_BACK) == LOW) {
+        lastButtonMs_ = millis();
+        return Button::Back;
+    }
+
+    const uint8_t clkState = digitalRead(Pins::ENCODER_LEFT);
+    const uint8_t dtState = digitalRead(Pins::ENCODER_RIGHT);
+    if (lastClkState == HIGH && clkState == LOW) {
+        lastButtonMs_ = millis();
+        lastClkState = clkState;
+        return (dtState == HIGH) ? Button::Down : Button::Up;
+    }
+
+    lastClkState = clkState;
+    return Button::None;
 }
 
 void MenuSystem::move(int delta, uint8_t count) {
